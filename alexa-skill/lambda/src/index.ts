@@ -11,6 +11,7 @@ import {loggingRequestInterceptor} from './interceptors/logginRequestInterceptor
 import {loggingResponseInterceptor} from './interceptors/logginResponseInterceptor';
 import {eventIntentsHandler} from "./handlers/eventsIntentHandler";
 import {placesIntentsHandler} from "./handlers/placesIntentHandler";
+import {buildDynamoDBAdapter} from "./persistenceAdapterBuilder";
 
 /**
  * This handler acts as the entry point for your skill, routing all request and response
@@ -33,5 +34,7 @@ exports.handler = alexa.SkillBuilders.custom()
         localisationRequestInterceptor,
         loggingRequestInterceptor,
     )
+    .withPersistenceAdapter(buildDynamoDBAdapter())
+    .withApiClient(new alexa.DefaultApiClient())
     .addResponseInterceptors(loggingResponseInterceptor)
     .lambda();
