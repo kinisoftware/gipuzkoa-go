@@ -12,6 +12,13 @@ export const places = async (subcategoryId: string): Promise<PlacesResponse> => 
     return instance.get(url);
 };
 
+export const placesByCity = async (subcategoryId: string, cityId: string): Promise<PlacesResponse> => {
+    console.log(`Getting places for subcategory ${subcategoryId}`);
+    const url = `/pois?lang=es&country_id=63&zone_id=1010&subcategory_id=${subcategoryId}&city_id=${cityId}&api_key=ekhEafvz5R`;
+    console.log(`URL ${url}`);
+    return instance.get(url);
+};
+
 export const city = async (cityId: string): Promise<CityResponse> => {
     console.log(`Getting city by id ${cityId}`);
     const url = `/cities?lang=es&country_id=63&zone_id=1010&city_id=${cityId}&api_key=ekhEafvz5R`;

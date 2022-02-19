@@ -37,17 +37,27 @@ export const eventIntentsHandler = {
     },
 
     async handle(handlerInput: HandlerInput) {
+        const citySlot = alexa.getSlot(handlerInput.requestEnvelope, 'municipality');
 
         const year = moment().year();
         const month = moment().month() < 10 ? `0${moment().month() + 1}` : moment().month();
 
-        const eventsResponse = await events(year, month);
-        const speakOutput = `La agenda es: ${eventsResponse.data.items
-            .map((event) => speakEvent(event)).join(' .')}. `;
+        let agenda = undefined;
+        if (citySlot) {
+            if (citySlot.resolutions!!.resolutionsPerAuthority!![0].status.code === 'ER_SUCCESS_MATCH') {
+                const cityId = citySlot.resolutions!!.resolutionsPerAuthority!![0].values[0].value.id;
+                const eventsResponse = await events(year, month);
+                agenda = eventsResponse.data.items.filter((event) => event.municipalityNoraCode.toString() === cityId)
+            }
+        } else {
+            agenda = (await events(year, month)).data.items;
+        }
+
+        const speakOutput = `La agenda es: ${agenda!!.map((event) => speakEvent(event)).join(' .')}. `;
 
         return handlerInput.responseBuilder
-            .speak(speakOutput)
-            .withShouldEndSession(true)
+            .speak(speakOutput + " ¿Te puedo ayudar en algo más?")
+            .withShouldEndSession(false)
             .getResponse();
     },
 };
