@@ -14,4 +14,6 @@ export interface Event {
     municipalityNoraCode: number;
     provinceNoraCode: number;
     establishmentEs: string;
+    municipalityLatitude: number;
+    municipalityLongitude: number;
 }

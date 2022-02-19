@@ -47,7 +47,7 @@ export const eventIntentsHandler = {
 
         let agenda = undefined;
         let withCityInfo = true;
-        if (citySlot) {
+        if (citySlot && citySlot.resolutions) {
             if (citySlot.resolutions!!.resolutionsPerAuthority!![0].status.code === 'ER_SUCCESS_MATCH') {
                 const cityId = citySlot.resolutions!!.resolutionsPerAuthority!![0].values[0].value.id;
                 const eventsResponse = await events(year, month);
@@ -55,7 +55,19 @@ export const eventIntentsHandler = {
             }
             withCityInfo = false;
         } else {
-            agenda = (await events(year, month)).data.items;
+            const geoObject = handlerInput.requestEnvelope.context.Geolocation;
+            if (geoObject) {
+                console.log("Filtering by geolocation");
+                agenda = (await events(year, month)).data.items
+                    .filter((event) =>
+                        event.municipalityLatitude + 100 > geoObject.coordinate!!.latitudeInDegrees && event.municipalityLatitude - 100 < geoObject.coordinate!!.latitudeInDegrees
+                    )
+                    .filter((event) =>
+                        event.municipalityLongitude + 100 > geoObject.coordinate!!.longitudeInDegrees && event.municipalityLongitude - 100 < geoObject.coordinate!!.longitudeInDegrees
+                    );
+            } else {
+                agenda = (await events(year, month)).data.items;
+            }
         }
 
         const speakOutput = `La agenda es: ${agenda!!.map((event) => speakEvent(event, withCityInfo)).join(' .')}. `;
