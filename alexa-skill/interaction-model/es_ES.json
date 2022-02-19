@@ -1,0 +1,294 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "gipuzkoa go",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "EventsIntent",
+          "slots": [
+            {
+              "name": "municipality",
+              "type": "CityEuskadiType"
+            }
+          ],
+          "samples": [
+            "la agenda en {municipality}",
+            "agenda en {municipality} ",
+            "eventos en {municipality}",
+            "los eventos en {municipality}"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "PlacesIntent",
+          "slots": [
+            {
+              "name": "places",
+              "type": "PlaceType",
+              "samples": [
+                "me interesan {places}",
+                "sobre {places}",
+                "{places}"
+              ]
+            },
+            {
+              "name": "city",
+              "type": "CityType"
+            }
+          ],
+          "samples": [
+            "información sobre {places} en {city}",
+            "dime {places} en {city}",
+            "dame {places} en {city}",
+            "zonas en {city}",
+            "sitios en {city}",
+            "lugares"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "PlaceType",
+          "values": [
+            {
+              "id": "123",
+              "name": {
+                "value": "Albergues"
+              }
+            },
+            {
+              "id": "72",
+              "name": {
+                "value": "Apartamentos"
+              }
+            },
+            {
+              "id": "73",
+              "name": {
+                "value": "Aparthoteles"
+              }
+            },
+            {
+              "id": "31",
+              "name": {
+                "value": "Balnearios"
+              }
+            },
+            {
+              "id": "40",
+              "name": {
+                "value": "Bares de Copas"
+              }
+            },
+            {
+              "id": "34",
+              "name": {
+                "value": "Bares de Tapas"
+              }
+            },
+            {
+              "id": "43",
+              "name": {
+                "value": "Cafeterías"
+              }
+            },
+            {
+              "id": "74",
+              "name": {
+                "value": "Campings"
+              }
+            },
+            {
+              "id": "69",
+              "name": {
+                "value": "Casas Rurales"
+              }
+            },
+            {
+              "id": "70",
+              "name": {
+                "value": "Hostales"
+              }
+            },
+            {
+              "id": "68",
+              "name": {
+                "value": "Hoteles"
+              }
+            },
+            {
+              "id": "102",
+              "name": {
+                "value": "Mercados"
+              }
+            },
+            {
+              "id": "15",
+              "name": {
+                "value": "Monumentos Históricos"
+              }
+            },
+            {
+              "id": "9",
+              "name": {
+                "value": "Playas"
+              }
+            },
+            {
+              "id": "29",
+              "name": {
+                "value": "Restaurantes"
+              }
+            },
+            {
+              "id": "33",
+              "name": {
+                "value": "Spa"
+              }
+            },
+            {
+              "id": "61",
+              "name": {
+                "value": "Surf"
+              }
+            },
+            {
+              "id": "27",
+              "name": {
+                "value": "Tiendas"
+              }
+            },
+            {
+              "id": "26",
+              "name": {
+                "value": "Zonas de Compras"
+              }
+            },
+            {
+              "id": "41",
+              "name": {
+                "value": "Zonas de Copas"
+              }
+            }
+          ]
+        },
+        {
+          "name": "CityType",
+          "values": [
+            {
+              "id": "236180",
+              "name": {
+                "value": "Ordizia"
+              }
+            },
+            {
+              "id": "239098",
+              "name": {
+                "value": "Zarautz"
+              }
+            },
+            {
+              "id": "1242",
+              "name": {
+                "value": "Donostia",
+                "synonyms": [
+                  "San Sebastián"
+                ]
+              }
+            },
+            {
+              "id": "31681",
+              "name": {
+                "value": "Irún"
+              }
+            },
+            {
+              "id": "234481",
+              "name": {
+                "value": "Hondarribia",
+                "synonyms": [
+                  "Fuenterrabia"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "CityEuskadiType",
+          "values": [
+            {
+              "id": "130",
+              "name": {
+                "value": "Usurbil"
+              }
+            },
+            {
+              "id": "82",
+              "name": {
+                "value": "Donostia"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "PlacesIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "places",
+              "type": "PlaceType",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.444336609686.967878287801"
+              }
+            },
+            {
+              "name": "city",
+              "type": "CityType",
+              "confirmationRequired": false,
+              "elicitationRequired": false,
+              "prompts": {}
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.444336609686.967878287801",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "¿sobre qué quieres información?"
+          },
+          {
+            "type": "PlainText",
+            "value": "¿qué tipo de zonas te interesan?"
+          }
+        ]
+      }
+    ]
+  }
+}
