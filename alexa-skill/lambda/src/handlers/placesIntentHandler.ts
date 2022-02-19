@@ -10,11 +10,17 @@ export const placesIntentsHandler = {
         );
     },
     async handle(handlerInput: HandlerInput) {
+        const placesSlot = alexa.getSlot(handlerInput.requestEnvelope, 'places');
 
-        const placesResponse = await places(40);
-        console.log(placesResponse);
-        const speakOutput = `Los sitios son: ${placesResponse.data.map((place) => place.name).join(' .')}. `;
-
+        let speakOutput;
+        if (placesSlot.resolutions!!.resolutionsPerAuthority!![0].status.code === 'ER_SUCCESS_MATCH') {
+            const placeId = placesSlot.resolutions!!.resolutionsPerAuthority!![0].values[0].value.id;
+            const placesResponse = await places(placeId);
+            console.log(placesResponse);
+            speakOutput = `Los sitios son: ${placesResponse.data.slice(0, 5).map((place) => place.name).join(' .')}. `;
+        } else {
+            speakOutput = `Lo siento, aún no tengo recomendaciones sobre ${placesSlot.value}`;
+        }
 
         return handlerInput.responseBuilder
             .speak(speakOutput)
