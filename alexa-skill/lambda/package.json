@@ -1,0 +1,35 @@
+{
+  "name": "alexa-skill-gipuzkoa-go",
+  "version": "1.0.0",
+  "description": "gipuzkoa go",
+  "main": "src/index.ts",
+  "scripts": {
+    "deploy": "npm run build && cd lib/src && zip -r lambda.zip . && aws lambda update-function-code --region eu-west-3 --function-name alexa-skill-gipuzkoa-go --zip-file fileb://lambda.zip",
+    "build": "npm run clean && npm run compile && cp \"package.json\" lib/src && cd lib/src && npm install --production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check"
+  },
+  "author": "Kinisoftware",
+  "license": "Apache License",
+  "dependencies": {
+    "ask-sdk-core": "^2.11.0",
+    "ask-sdk-model": "^1.37.1",
+    "aws-sdk": "^2.814.0",
+    "ask-sdk-dynamodb-persistence-adapter": "^2.7.0",
+    "i18next": "^15.0.5",
+    "axios": "^0.21.1",
+    "moment": "^2.29.1"
+  },
+  "devDependencies": {
+    "@types/node": "^10.0.3",
+    "typescript": "~3.7.0",
+    "i18n-ts": "^1.0.5",
+    "gts": "^1.1.2"
+  }
+}
