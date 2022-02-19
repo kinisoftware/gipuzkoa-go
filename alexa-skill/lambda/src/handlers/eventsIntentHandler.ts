@@ -6,7 +6,7 @@ import {Event} from "../api/events/models";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const moment = require('moment');
 
-const speakEvent = (event: Event): string => {
+const speakEvent = (event: Event, withPlaceInfo: boolean): string => {
     let date;
     if (event.startDate === event.endDate) {
         const eventDate = moment(event.startDate, 'YYYY-MM-DD');
@@ -23,9 +23,12 @@ const speakEvent = (event: Event): string => {
         date = `del <say-as interpret-as="date" format="dm">${startDay}-${startMonth}</say-as> al <say-as interpret-as="date" format="dm">${endDay}-${endMonth}</say-as>`;
     }
 
-    const lugar = event.municipalityEs.split(',')[0];
-
-    return `${date}, en ${lugar}, ${event.nameEs}`;
+    if (withPlaceInfo) {
+        const lugar = event.municipalityEs.split(',')[0];
+        return `${date}, en ${lugar}, ${event.nameEs}`;
+    } else {
+        return `${date}, ${event.nameEs}`;
+    }
 };
 
 export const eventIntentsHandler = {
@@ -43,17 +46,19 @@ export const eventIntentsHandler = {
         const month = moment().month() < 10 ? `0${moment().month() + 1}` : moment().month();
 
         let agenda = undefined;
+        let withCityInfo = true;
         if (citySlot) {
             if (citySlot.resolutions!!.resolutionsPerAuthority!![0].status.code === 'ER_SUCCESS_MATCH') {
                 const cityId = citySlot.resolutions!!.resolutionsPerAuthority!![0].values[0].value.id;
                 const eventsResponse = await events(year, month);
                 agenda = eventsResponse.data.items.filter((event) => event.municipalityNoraCode.toString() === cityId)
             }
+            withCityInfo = false;
         } else {
             agenda = (await events(year, month)).data.items;
         }
 
-        const speakOutput = `La agenda es: ${agenda!!.map((event) => speakEvent(event)).join(' .')}. `;
+        const speakOutput = `La agenda es: ${agenda!!.map((event) => speakEvent(event, withCityInfo)).join(' .')}. `;
 
         return handlerInput.responseBuilder
             .speak(speakOutput + " ¿Te puedo ayudar en algo más?")

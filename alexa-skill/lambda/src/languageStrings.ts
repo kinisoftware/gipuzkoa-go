@@ -6,7 +6,7 @@ module.exports = {
             WELCOME_MSG: '¡Qué alegría tener por aquí de vuelta! ¿En qué te puedo ayudar hoy?',
             WELCOME_WITH_NAME_MSG: '¡Hola de nuevo {{userName}}! ¿En qué te puedo ayudar hoy?',
             HELP_MSG: 'Te ayudo, ¿qué quieres hacer?',
-            GOODBYE_MSG: '!Agur!',
+            GOODBYE_MSG: 'Siempre un placer ayudarte. Disfruta de Gipuzkoa ¡Gero arte!',
             REFLECTOR_MSG: 'Acabas de activar {{intentName}}',
             FALLBACK_MSG: 'Lo siento, no se nada sobre eso. ',
             ERROR_MSG: 'Lo siento, ha habido un error. Por favor inténtalo otra vez.',

@@ -29,10 +29,16 @@ export const placesIntentsHandler = {
             console.log(placesResponse);
 
             const placesInfo = [];
-            for (let place of placesResponse!!.data.slice(0, 5)) {
-                const cityResponse = await city(place.city_id)
-                const cityName = cityResponse.data[0].city_name;
-                placesInfo.push(`${place.name} en ${cityName}`);
+            if (!citySlot) {
+                for (let place of placesResponse!!.data.slice(0, 5)) {
+                    const cityResponse = await city(place.city_id)
+                    const cityName = cityResponse.data[0].city_name;
+                    placesInfo.push(`${place.name} en ${cityName}`);
+                }
+            } else {
+                for (let place of placesResponse!!.data.slice(0, 5)) {
+                    placesInfo.push(`${place.name}`);
+                }
             }
 
             speakOutput = `Los sitios son: ${placesInfo.join(' .')}. `;
