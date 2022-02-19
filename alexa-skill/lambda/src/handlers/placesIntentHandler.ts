@@ -1,6 +1,6 @@
 import * as alexa from 'ask-sdk-core';
 import {HandlerInput} from 'ask-sdk-core';
-import {places} from "../api/places/api-client";
+import {city, places} from "../api/places/api-client";
 
 export const placesIntentsHandler = {
     canHandle(handlerInput: HandlerInput) {
@@ -17,7 +17,15 @@ export const placesIntentsHandler = {
             const placeId = placesSlot.resolutions!!.resolutionsPerAuthority!![0].values[0].value.id;
             const placesResponse = await places(placeId);
             console.log(placesResponse);
-            speakOutput = `Los sitios son: ${placesResponse.data.slice(0, 5).map((place) => place.name).join(' .')}. `;
+
+            const placesInfo = [];
+            for (let place of placesResponse.data.slice(0, 5)) {
+                const cityResponse = await city(place.city_id)
+                const cityName = cityResponse.data[0].city_name;
+                placesInfo.push(`${place.name} en ${cityName}`);
+            }
+
+            speakOutput = `Los sitios son: ${placesInfo.join(' .')}. `;
         } else {
             speakOutput = `Lo siento, aún no tengo recomendaciones sobre ${placesSlot.value}`;
         }
