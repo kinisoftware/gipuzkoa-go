@@ -69,7 +69,7 @@ export const eventIntentsHandler = {
             }
             withCityInfo = false;
             withDateInfo = false;
-            speakOut = `La agenda para ${citySlot.value} es: `;
+            speakOut = `La agenda del <say-as interpret-as="date" format="dm">${day}-${month}</say-as> para ${citySlot.value} es: `;
         } else {
             const geoObject = handlerInput.requestEnvelope.context.Geolocation;
             if (geoObject) {
@@ -82,11 +82,11 @@ export const eventIntentsHandler = {
                         event.municipalityLongitude + 100 > geoObject.coordinate!!.longitudeInDegrees && event.municipalityLongitude - 100 < geoObject.coordinate!!.longitudeInDegrees
                     );
                 withDateInfo = false;
-                speakOut = `Los eventos que tienes cerca son: `;
+                speakOut = `Los eventos que tienes el <say-as interpret-as="date" format="dm">${day}-${month}</say-as> cerca son: `;
             } else {
                 withDateInfo = false;
                 agenda = (await events(year, month, day)).data.items;
-                speakOut = `La agenda en Gipukoa es: `;
+                speakOut = `La agenda en Gipukoa para el <say-as interpret-as="date" format="dm">${day}-${month}</say-as> es: `;
             }
         }
 
