@@ -41,7 +41,7 @@ export const placesIntentsHandler = {
                 }
             }
 
-            speakOutput = `Los sitios son: ${placesInfo.join(' .')}. `;
+            speakOutput = `Las recomendaciones son: ${placesInfo.join(' .')}. `;
         } else {
             speakOutput = `Lo siento, aún no tengo recomendaciones sobre ${placesSlot.value}`;
         }

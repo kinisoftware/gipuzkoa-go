@@ -13,6 +13,6 @@ export const cancelAndStopIntentHandler = {
     handle(handlerInput: HandlerInput) {
         const speakOutput = i18n.t('GOODBYE_MSG');
 
-        return handlerInput.responseBuilder.speak(speakOutput).getResponse();
+        return handlerInput.responseBuilder.speak(`${speakOutput}<audio src="soundbank://soundlibrary/wood/moves/moves_01"/>`).getResponse();
     },
 };

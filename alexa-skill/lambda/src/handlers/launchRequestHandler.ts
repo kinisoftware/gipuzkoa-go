@@ -38,7 +38,7 @@ export const launchRequestHandler = {
         }
 
         return responseBuilder
-            .speak(spoke)
+            .speak(`<audio src="soundbank://soundlibrary/wood/moves/moves_01"/>${spoke}`)
             .reprompt(spoke)
             .getResponse();
     },

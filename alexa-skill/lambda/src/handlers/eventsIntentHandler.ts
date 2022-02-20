@@ -86,7 +86,7 @@ export const eventIntentsHandler = {
             } else {
                 withDateInfo = false;
                 agenda = (await events(year, month, day)).data.items;
-                speakOut = `La agenda en Gipukoa para el <say-as interpret-as="date" format="dm">${day}-${month}</say-as> es: `;
+                speakOut = `La agenda en Gipuzkoa para el <say-as interpret-as="date" format="dm">${day}-${month}</say-as> es: `;
             }
         }
 
